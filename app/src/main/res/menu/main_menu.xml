@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/selectFromGalleryMenuItem"
+        android:icon="@drawable/ic_pick_image"
+        android:title="@string/image_pick_text"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/saveImageMenuItem"
+        android:icon="@drawable/ic_save_image"
+        android:title="@string/save_image_text"
+        app:showAsAction="always" />
+</menu>

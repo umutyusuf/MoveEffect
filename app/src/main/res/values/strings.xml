@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Move Effect</string>
+    <string name="picture_selector_title">Select Picture</string>
+    <string name="rep_count_label">Count</string>
+    <string name="alpha_label">Opacity</string>
+    <string name="action_save">SAVE</string>
+    <string name="image_pick_text">Select From Gallery</string>
+    <string name="save_image_text">Save Image</string>
+</resources>

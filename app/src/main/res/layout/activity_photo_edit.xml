@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.umut.moveeffect.EditableImageView
+        android:id="@+id/editableImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/size_normal"
+        android:layout_marginBottom="@dimen/size_normal"
+        android:scaleType="center" />
+
+
+    <RelativeLayout
+        android:id="@+id/moveSelectionWrapperRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/moveSettingsWrapperBg"
+        android:padding="@dimen/size_large"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/repCountLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rep_count_label" />
+
+        <TextView
+            android:id="@+id/repCountIndicatorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="start|center_vertical"
+            android:maxEms="2"
+            android:minEms="2"
+            tools:text="15" />
+
+        <SeekBar
+            android:id="@+id/repCountSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_half"
+            android:layout_marginEnd="@dimen/size_half"
+            android:layout_toStartOf="@id/repCountIndicatorTextView"
+            android:layout_toEndOf="@id/repCountLabelTextView" />
+
+        <TextView
+            android:id="@+id/opacityLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/repCountLabelTextView"
+            android:layout_marginTop="@dimen/size_large"
+            android:text="@string/alpha_label" />
+
+        <TextView
+            android:id="@+id/alphaIndicatorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/opacityLabelTextView"
+            android:layout_alignParentEnd="true"
+            android:gravity="start|center_vertical"
+            android:maxEms="2"
+            android:minEms="2"
+            tools:text="15" />
+
+        <SeekBar
+            android:id="@+id/alphaSelectionSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/opacityLabelTextView"
+            android:layout_marginStart="@dimen/size_half"
+            android:layout_marginEnd="@dimen/size_half"
+            android:layout_toStartOf="@id/repCountIndicatorTextView"
+            android:layout_toEndOf="@id/repCountLabelTextView" />
+
+    </RelativeLayout>
+
+</FrameLayout>
