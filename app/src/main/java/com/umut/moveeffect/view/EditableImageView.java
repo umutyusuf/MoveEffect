@@ -179,6 +179,7 @@ public class EditableImageView extends AppCompatImageView {
         moveBitmapCanvas.drawBitmap(croppedAreaBitmap, null, selectionRect, null);
         RectF drawRect = new RectF(selectionRect);
         for (PointF p : offsetList) {
+            drawRect.set(selectionRect);
             drawRect.offset(p.x, p.y);
             if (!moveBitmapCanvas.quickReject(drawRect, Canvas.EdgeType.AA)) {
                 moveBitmapCanvas.drawBitmap(croppedAreaBitmap, null, drawRect, croppedBitmapPaint);
