@@ -31,31 +31,35 @@ public final class BitmapUtils {
 
         final Rect rect = PointUtils.getRectOfPath(path);
         final Bitmap croppedBmp = Bitmap.createBitmap(output, rect.left, rect.top, rect.width(), rect.height());
-        if (croppedBmp != output) {
+        if (croppedBmp != output && !output.isRecycled()) {
             output.recycle();
         }
         return croppedBmp;
     }
 
-    public static Bitmap resize(@Nullable Bitmap image, int maxWidth, int maxHeight) {
+    public static Bitmap resize(@Nullable Bitmap image, float maxWidth, float maxHeight) {
         if (maxHeight > 0 && maxWidth > 0 && image != null) {
             int width = image.getWidth();
             int height = image.getHeight();
             float ratioBitmap = (float) width / (float) height;
-            float ratioMax = (float) maxWidth / (float) maxHeight;
+            float ratioMax = maxWidth / maxHeight;
 
-            int finalWidth = maxWidth;
-            int finalHeight = maxHeight;
+            float finalWidth = maxWidth;
+            float finalHeight = maxHeight;
             if (ratioMax > ratioBitmap) {
-                finalWidth = (int) ((float) maxHeight * ratioBitmap);
+                finalWidth = (int) (maxHeight * ratioBitmap);
             } else {
-                finalHeight = (int) ((float) maxWidth / ratioBitmap);
+                finalHeight = (int) (maxWidth / ratioBitmap);
             }
-            final Bitmap resizedBitmap = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, false);
-            image.recycle();
+            final Bitmap resizedBitmap = Bitmap.createScaledBitmap(image, (int) finalWidth, (int) finalHeight, false);
+            if (resizedBitmap != image) {
+                image.recycle();
+            }
             return resizedBitmap;
         } else {
             return image;
         }
     }
+
+
 }

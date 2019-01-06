@@ -35,6 +35,7 @@ public class EditableImageView extends AppCompatImageView {
     private final PointF grabPoint = new PointF();
     private final PointF lastDragPoint = new PointF();
     private final List<PointF> offsetList = new ArrayList<>();
+    private final Rect selectionRect = new Rect();
 
     @MarkState
     private int state;
@@ -51,7 +52,6 @@ public class EditableImageView extends AppCompatImageView {
     private Bitmap moveBitmap;
 
     private int repCount;
-    private Rect selectionRect;
 
     public EditableImageView(Context context) {
         this(context, null);
@@ -130,6 +130,19 @@ public class EditableImageView extends AppCompatImageView {
         invalidate();
     }
 
+    @Nullable
+    public Bitmap getDrawnBitmap() {
+        final Bitmap output = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+        if (moveBitmap != null) {
+            canvas.drawBitmap(((BitmapDrawable) getDrawable()).getBitmap(), 0, 0, null);
+            canvas.drawBitmap(moveBitmap, 0, 0, null);
+            return output;
+        } else {
+            return null;
+        }
+    }
+
     private void prepareMoveCanvas() {
         eraseMoveBitmap();
         if (croppedAreaBitmap != null) {
@@ -193,6 +206,7 @@ public class EditableImageView extends AppCompatImageView {
             croppedAreaBitmap.recycle();
         }
         croppedAreaBitmap = null;
+        offsetList.clear();
         eraseMoveBitmap();
         rewind();
         onAreaSelectReleased();
@@ -284,7 +298,7 @@ public class EditableImageView extends AppCompatImageView {
                     qAddToPath(nPoint, initialPoint);
                     closePath();
                     onAreaSelected();
-                    this.selectionRect = PointUtils.getRectOfPath(selectionPath);
+                    this.selectionRect.set(PointUtils.getRectOfPath(selectionPath));
                     croppedAreaBitmap =
                             BitmapUtils.getCroppedBitmap(
                                     ((BitmapDrawable) getDrawable()).getBitmap(),
