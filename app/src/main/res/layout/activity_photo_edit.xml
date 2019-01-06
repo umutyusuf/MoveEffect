@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.umut.moveeffect.EditableImageView
+    <com.umut.moveeffect.view.EditableImageView
         android:id="@+id/editableImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

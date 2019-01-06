@@ -1,4 +1,4 @@
-package com.umut.moveeffect;
+package com.umut.moveeffect.util;
 
 public final class Constants {
 

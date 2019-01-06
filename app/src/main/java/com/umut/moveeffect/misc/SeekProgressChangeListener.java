@@ -1,4 +1,4 @@
-package com.umut.moveeffect;
+package com.umut.moveeffect.misc;
 
 import android.widget.SeekBar;
 

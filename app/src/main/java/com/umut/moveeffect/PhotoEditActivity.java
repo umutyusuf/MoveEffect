@@ -21,7 +21,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umut.moveeffect.misc.SeekProgressChangeListener;
+import com.umut.moveeffect.util.BitmapUtils;
+import com.umut.moveeffect.util.Constants;
 import com.umut.moveeffect.util.FileUtils;
+import com.umut.moveeffect.view.EditableImageView;
+import com.umut.moveeffect.view.SelectionStateListener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

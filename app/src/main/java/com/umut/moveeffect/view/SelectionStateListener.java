@@ -1,4 +1,4 @@
-package com.umut.moveeffect;
+package com.umut.moveeffect.view;
 
 public interface SelectionStateListener {
     void onAreaSelect();

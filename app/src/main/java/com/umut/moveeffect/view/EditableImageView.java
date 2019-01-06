@@ -1,4 +1,4 @@
-package com.umut.moveeffect;
+package com.umut.moveeffect.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,6 +17,10 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.umut.moveeffect.util.BitmapUtils;
+import com.umut.moveeffect.util.Constants;
+import com.umut.moveeffect.util.PointUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,31 +30,38 @@ public class EditableImageView extends AppCompatImageView {
     private static final int CIRCLE_COLOR = Color.WHITE;
     private static final float LINE_WIDTH = 9f;
 
+    @NonNull
     private final Path selectionPath = new Path();
+    @NonNull
     private final Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    @NonNull
     private final Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    @NonNull
     private final Paint croppedBitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    @NonNull
     private final PointF initialPoint = new PointF(-Constants.INITIAL_CIRCLE_RADIUS, -Constants.INITIAL_CIRCLE_RADIUS);
+    @NonNull
     private final PointF lastPoint = new PointF();
+    @NonNull
     private final PointF grabPoint = new PointF();
+    @NonNull
     private final PointF lastDragPoint = new PointF();
+    @NonNull
     private final List<PointF> offsetList = new ArrayList<>();
+    @NonNull
     private final Rect selectionRect = new Rect();
 
     @MarkState
     private int state;
-
-    @Nullable
-    private SelectionStateListener listener;
-
     @Nullable
     private Bitmap croppedAreaBitmap;
-
     @Nullable
     private Canvas moveBitmapCanvas;
     @Nullable
     private Bitmap moveBitmap;
 
+    @Nullable
+    private SelectionStateListener listener;
     private int repCount;
 
     public EditableImageView(Context context) {
@@ -150,7 +161,6 @@ public class EditableImageView extends AppCompatImageView {
         }
     }
 
-
     private void drawMoveCanvas(@NonNull Bitmap croppedAreaBitmap) {
         if (moveBitmap == null) {
             populateMoveBitmap();
@@ -190,6 +200,8 @@ public class EditableImageView extends AppCompatImageView {
                 } else {
                     onInitialTouch(point);
                 }
+            default:
+                onInitialTouch(point);
         }
     }
 
@@ -206,6 +218,7 @@ public class EditableImageView extends AppCompatImageView {
             croppedAreaBitmap.recycle();
         }
         croppedAreaBitmap = null;
+        moveBitmapCanvas = null;
         offsetList.clear();
         eraseMoveBitmap();
         rewind();
@@ -229,7 +242,6 @@ public class EditableImageView extends AppCompatImageView {
             computeOffsetList();
         } else {
             state = MarkState.MARKER_MOVE;
-            // Computation Might be moved to on release
             if (!computeIntersect(point)) {
                 lastPoint.set(point);
                 addToPath(point);

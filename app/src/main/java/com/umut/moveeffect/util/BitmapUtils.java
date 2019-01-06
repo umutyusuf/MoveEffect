@@ -1,4 +1,4 @@
-package com.umut.moveeffect;
+package com.umut.moveeffect.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
