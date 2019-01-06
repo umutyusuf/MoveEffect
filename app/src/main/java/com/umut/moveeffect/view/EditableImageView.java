@@ -16,7 +16,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.umut.moveeffect.util.BitmapUtils;
@@ -183,8 +182,6 @@ public class EditableImageView extends AppCompatImageView {
             drawRect.offset(p.x, p.y);
             if (!moveBitmapCanvas.quickReject(drawRect, Canvas.EdgeType.AA)) {
                 moveBitmapCanvas.drawBitmap(croppedAreaBitmap, null, drawRect, croppedBitmapPaint);
-            } else {
-                Log.d("MOVE EFFECT TEST", "true");
             }
         }
         moveBitmapCanvas.restore();
