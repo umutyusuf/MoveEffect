@@ -10,11 +10,13 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.umut.moveeffect.util.BitmapUtils;
@@ -110,6 +112,9 @@ public class EditableImageView extends AppCompatImageView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         final PointF point = new PointF(event.getX(), event.getY());
+        if (state != MarkState.SELECTION_DRAGGING && !isEventInOfBounds(event)) {
+            return super.onTouchEvent(event);
+        }
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 onActionDown(point);
@@ -172,10 +177,15 @@ public class EditableImageView extends AppCompatImageView {
             return;
         }
         moveBitmapCanvas.save();
-        moveBitmapCanvas.drawBitmap(croppedAreaBitmap, selectionRect.left, selectionRect.top, null);
-
+        moveBitmapCanvas.drawBitmap(croppedAreaBitmap, null, selectionRect, null);
+        RectF drawRect = new RectF(selectionRect);
         for (PointF p : offsetList) {
-            moveBitmapCanvas.drawBitmap(croppedAreaBitmap, selectionRect.left + p.x, selectionRect.top + p.y, croppedBitmapPaint);
+            drawRect.offset(p.x, p.y);
+            if (!moveBitmapCanvas.quickReject(drawRect, Canvas.EdgeType.AA)) {
+                moveBitmapCanvas.drawBitmap(croppedAreaBitmap, null, drawRect, croppedBitmapPaint);
+            } else {
+                Log.d("MOVE EFFECT TEST", "true");
+            }
         }
         moveBitmapCanvas.restore();
     }
@@ -320,6 +330,15 @@ public class EditableImageView extends AppCompatImageView {
             }
         }
         return false;
+    }
+
+    private boolean isEventInOfBounds(MotionEvent motionEvent) {
+        int[] iArr = new int[2];
+        getLocationOnScreen(iArr);
+        int i = iArr[0];
+        int i2 = iArr[1];
+        return !(motionEvent.getRawX() < ((float) i) || motionEvent.getRawX() > ((float) (i + getWidth()))
+                || motionEvent.getRawY() < ((float) i2) || motionEvent.getRawY() > ((float) (i2 + getHeight())));
     }
 
     private void onAreaSelected() {
