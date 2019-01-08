@@ -137,7 +137,7 @@ public class EditableImageView extends AppCompatImageView {
 
     @Nullable
     public Bitmap getDrawnBitmap() {
-        final Bitmap output = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        final Bitmap output = Bitmap.createBitmap(((BitmapDrawable) getDrawable()).getBitmap());
         final Canvas canvas = new Canvas(output);
         if (drawOverlays(canvas)) {
             return output;
