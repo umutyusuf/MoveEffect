@@ -89,9 +89,9 @@ public class EditableImageView extends AppCompatImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawOverlays(canvas);
         canvas.drawCircle(initialPoint.x, initialPoint.y, Constants.INITIAL_CIRCLE_RADIUS, circlePaint);
         canvas.drawPath(selectionPath, linePaint);
-        drawOverlays(canvas);
     }
 
     @Override
@@ -287,11 +287,12 @@ public class EditableImageView extends AppCompatImageView {
     private boolean drawOverlays(Canvas canvas) {
         if (croppedAreaBitmap != null && (diffStepX != 0 || diffStepY != 0)) {
             drawRect.set(selectionRect);
-            for (int i = 0; i < repCount; i++) {
-                drawRect.offset(diffStepX, diffStepY);
+            for (int i = repCount; i > 0; i--) {
+                drawRect.offset(diffStepX * i, diffStepY * i);
                 if (!canvas.quickReject(drawRect, Canvas.EdgeType.AA)) {
                     canvas.drawBitmap(croppedAreaBitmap, null, drawRect, croppedBitmapPaint);
                 }
+                drawRect.set(selectionRect);
             }
             canvas.drawBitmap(croppedAreaBitmap, null, selectionRect, copyBitmapPath);
             return true;
